@@ -1,18 +1,25 @@
 from flask import Flask
+from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
+from .config import DatabaseConfig
 
-from icecream.config.DatabaseConfig import getURI
+db = SQLAlchemy()
+migrate = Migrate()
 
-app = Flask(__name__)
-db = SQLAlchemy(app)
+def create_app():
+    app = Flask(__name__)
+    app.config.from_object(DatabaseConfig)
 
-app.config['SQLALCHEMY_DATABASE_URI'] = getURI()
-app.config['SQLALCHEMY_ECHO'] = True
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
+    # ORM
+    db.init_app(app)
+    migrate.init_app(app, db)
+    from .models import products
 
-db.init_app(app)
-# from entity import product
-db.create_all()
+    # 블루프린트
+    from .controller import main_views
+    app.register_blueprint(main_views.bp)
 
-if __name__ == '__main__':
-    app.run()
+    return app
+
+if __name__ == "__main__":
+    create_app().run()
