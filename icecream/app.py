@@ -5,6 +5,7 @@ from config import DatabaseConfig
 from importlib.machinery import SourceFileLoader
 import sys
 sys.path.append('/icecream/controller/main_views')
+sys.path.append('/icecream/models/products')
 db = SQLAlchemy()
 migrate = Migrate()
 
@@ -15,7 +16,7 @@ def create_app():
     # ORM
     db.init_app(app)
     migrate.init_app(app, db)
-    # from .models import products
+    from models import products
 
     # 블루프린트
     from controller import main_views
