@@ -3,8 +3,6 @@ from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
 from config import DatabaseConfig
 import sys
-sys.path.append('/icecream/controller/main_views')
-sys.path.append('/icecream/models/products')
 db = SQLAlchemy()
 migrate = Migrate()
 
