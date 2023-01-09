@@ -1,4 +1,4 @@
-from icecream import db
+from app import db
 from datetime import datetime
 
 class Products(db.Model):
