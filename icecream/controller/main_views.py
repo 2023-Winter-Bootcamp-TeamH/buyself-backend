@@ -1,6 +1,6 @@
 from flask import Blueprint
 
-from . import routes
+routes = Blueprint('main', __name__, url_prefix='/')
 
 @routes.route('/')
 def hello_pybo():
