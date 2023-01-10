@@ -1,5 +1,4 @@
-from models import Products
-from app import db
+from .models import Products
 
 # 전체 상품 리스트 반환
 def get_product_all_list(page):
@@ -7,8 +6,8 @@ def get_product_all_list(page):
     pagination = Products.query.paginate(page=page, per_page=3, error_out=False)
     for p in pagination.items:
         product = {'id': p.id,
-                 'class_name': p.name,
-                 'price': p.size,
+                 'class_name': p.class_name,
+                 'price': p.price,
                  'img_url': p.img_url}
         products.append(product)
     meta = get_page_list(pagination)
