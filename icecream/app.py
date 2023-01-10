@@ -2,9 +2,7 @@ from flask import Flask
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
 from config import DatabaseConfig
-import sys
-sys.path.append('/icecream/controller/main_views')
-sys.path.append('/icecream/models/products')
+
 db = SQLAlchemy()
 migrate = Migrate()
 
@@ -15,11 +13,10 @@ def create_app():
     # ORM
     db.init_app(app)
     migrate.init_app(app, db)
-    from models import products
 
     # 블루프린트
     from controller import main_views
-    app.register_blueprint(main_views.bp)
+    app.register_blueprint(main_views.routes)
 
     return app
 
