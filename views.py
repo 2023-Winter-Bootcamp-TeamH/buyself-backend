@@ -1,4 +1,5 @@
-from .models import Products
+from models.products import Products
+
 
 # 전체 상품 리스트 반환
 def get_product_all_list(page):

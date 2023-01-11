@@ -1,6 +1,7 @@
 from flask import jsonify, request, abort, Blueprint
 from flask_sqlalchemy import SQLAlchemy
-from icecream import views
+
+import views
 
 db = SQLAlchemy()
 routes = Blueprint('products', __name__, url_prefix='/')
