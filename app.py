@@ -2,7 +2,7 @@ from flask import Flask
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
 from config import DatabaseConfig
-import sys
+
 db = SQLAlchemy()
 migrate = Migrate()
 
@@ -13,7 +13,6 @@ def create_app():
     # ORM
     db.init_app(app)
     migrate.init_app(app, db)
-    from models import products
 
     # 블루프린트
     from controller import main_views
