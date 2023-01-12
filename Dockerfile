@@ -11,5 +11,4 @@ WORKDIR /app
 # mac os 버전일 경우 -> pip3로 변경 / 디펜던시 설치
 RUN pip install --upgrade pip
 RUN pip install -r requirements.txt
-
 CMD ["python3", "-m", "flask", "run", "--host=0.0.0.0"]
