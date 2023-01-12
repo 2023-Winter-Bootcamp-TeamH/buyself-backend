@@ -1,8 +1,8 @@
-DB_USERNAME =
-DB_PASSWORD =
-DB_HOST =
-DB_SCHEMA =
-DB_PORT =
+DB_USERNAME = ''
+DB_PASSWORD = ''
+DB_HOST = ''
+DB_SCHEMA = ''
+DB_PORT = ''
 
 def getURI():
     return 'mysql+pymysql://{}:{}@{}:{}/{}?charset=utf8'.format(DB_USERNAME, DB_PASSWORD,

@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, request, jsonify
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
 
@@ -19,8 +19,9 @@ def create_app():
     migrate.init_app(app, db)
 
     # 블루프린트
-    from controller import main_views, searchController
+    from controller import main_views, listController, searchController
     app.register_blueprint(main_views.routes)
+    app.register_blueprint(listController.routes)
     app.register_blueprint(searchController.routes)
 
     return app
@@ -29,5 +30,3 @@ app = create_app()
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', debug=True)
-
-
