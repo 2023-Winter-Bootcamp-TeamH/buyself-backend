@@ -17,7 +17,7 @@ def get_page_list(pagination):
 def get_search(kw, page):
     products = []
     search = '%%{}%%'.format(kw)
-    pagination = Products.query.filter(Products.class_name.ilike(search)).paginate(page=page, error_out=False)
+    pagination = Products.query.filter(Products.class_name.ilike(search)).paginate(page=page,per_page=3 ,error_out=False)
     for p in pagination.items:
         product = {'class_name': p.class_name,
                  'price': p.price,
