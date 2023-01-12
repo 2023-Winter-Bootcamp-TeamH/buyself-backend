@@ -24,7 +24,7 @@ def create_app():
         app,
         version='v1',
         title="Silicon Project's API Server",
-        description="Desert API Server",
+        description="Dessert API Server",
         terms_url="/",
         contact="junsu1222@naver.com",
         license="MIT",

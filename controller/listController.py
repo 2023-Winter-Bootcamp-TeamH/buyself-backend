@@ -8,7 +8,7 @@ db = SQLAlchemy()
 
 Products = Namespace(
     name="Products",
-    description="Products List를 조회하기 위해 사용하는 API.",
+    description="Products 데이터를 조회하기 위해 사용하는 API.",
 )
 
 # GET /api/products?page={page}
