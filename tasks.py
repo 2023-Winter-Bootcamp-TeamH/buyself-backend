@@ -6,5 +6,5 @@ app = Celery('tasks',
              backend='rpc://buyself:buyself@localhost//')
 
 @app.task
-def prediction():
-    return predict()
+def prediction(img_name):
+    return predict(img_name)

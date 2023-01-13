@@ -36,12 +36,11 @@ def delet_txt():
         os.remove(file_path)
 
 
-def predict():
+def predict(img_name):
     model = torch.hub.load('ultralytics/yolov5', 'custom', 'best.pt')
 
     # image = get_image(img_name)
-    img = 'Test.jpeg'
-    select_model = model(img, size=640)
+    select_model = model(img_name, size=640)
 
     object_cords(select_model)
     get_class(select_model)
