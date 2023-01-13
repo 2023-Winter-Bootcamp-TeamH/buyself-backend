@@ -4,7 +4,7 @@ from botocore.client import Config
 from .s3Config import ACCESS_KEY_ID, SECRET_ACCESS_KEY
 
 def s3_connection():
-    s3 =  boto3.resource(
+    s3 = boto3.resource(
         's3',
         aws_access_key_id=ACCESS_KEY_ID,
         aws_secret_access_key=SECRET_ACCESS_KEY,
