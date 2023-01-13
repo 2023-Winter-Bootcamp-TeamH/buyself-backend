@@ -13,7 +13,7 @@ migrate = Migrate()
 def create_app():
     app = Flask(__name__)
     app.config['JSON_AS_ASCII'] = False
-    CORS(app, supports_credentials=True, origins="localhost:3000")
+    CORS(app, resources={r'*': {'origins': '*'}})
     app.config.from_object(DatabaseConfig)
 
     # ORM
