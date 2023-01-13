@@ -1,5 +1,6 @@
 from flask import Flask, request, jsonify
 from flask_migrate import Migrate
+from flask_restx import Api
 from flask_sqlalchemy import SQLAlchemy
 
 
@@ -18,11 +19,18 @@ def create_app():
     db.init_app(app)
     migrate.init_app(app, db)
 
-    # 블루프린트
-    from controller import main_views, listController, searchController
-    app.register_blueprint(main_views.routes)
-    app.register_blueprint(listController.routes)
-    app.register_blueprint(searchController.routes)
+    # API Swagger
+    api = Api(
+        app,
+        version='v1',
+        title="Silicon Project's API Server",
+        description="Dessert API Server",
+        terms_url="/",
+        contact="junsu1222@naver.com",
+        license="MIT",
+    )
+    from controller import searchController
+    api.add_namespace(searchController.Products, '/')
 
     return app
 
