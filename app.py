@@ -2,7 +2,7 @@ from flask import Flask, request, jsonify
 from flask_migrate import Migrate
 from flask_restx import Api
 from flask_sqlalchemy import SQLAlchemy
-
+from flask_cors import CORS
 
 from config import DatabaseConfig
 
@@ -13,6 +13,7 @@ migrate = Migrate()
 def create_app():
     app = Flask(__name__)
     app.config['JSON_AS_ASCII'] = False
+    CORS(app, supports_credentials=True, origins="localhost:3000")
     app.config.from_object(DatabaseConfig)
 
     # ORM
