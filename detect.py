@@ -28,7 +28,7 @@ def get_id(num_line): # 텍스트파일에서 int값으로 class id를 가져오
         i += 1
     return num_line
 
-def delet_txt(): # 사용한 txt파일 삭제하는 함수
+def delete_txt(): # 사용한 txt파일 삭제하는 함수
     file_path = "class.txt"
 
     if os.path.exists(file_path):
@@ -50,6 +50,6 @@ def predict(img_name): # YOLOv5모델로 이미지 객체 탐지
     for i in get_id(num_line):
         result.append({'id': i})
 
-    delet_txt()
+    delete_txt()
 
     return result
