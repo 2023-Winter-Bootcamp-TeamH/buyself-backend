@@ -15,8 +15,9 @@ def create_app():
     migrate.init_app(app, db)
 
     # 블루프린트
-    from controller import main_views
+    from controller import main_views, predictController
     app.register_blueprint(main_views.bp)
+    app.register_blueprint(predictController.bp)
 
     return app
 
