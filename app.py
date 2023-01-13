@@ -16,8 +16,8 @@ def create_app():
 
     # 블루프린트
     from controller import main_views, predictController
-    app.register_blueprint(main_views.bp)
-    app.register_blueprint(predictController.bp)
+    app.register_blueprint(main_views.routes)
+    app.register_blueprint(predictController.routes)
 
     return app
 

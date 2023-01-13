@@ -1,7 +1,7 @@
 from flask import Blueprint
 
-bp = Blueprint('main', __name__, url_prefix='/')
+routes = Blueprint('main', __name__, url_prefix='/')
 
-@bp.route('/')
+@routes.route('/')
 def hello_pybo():
     return 'Main Views!'
