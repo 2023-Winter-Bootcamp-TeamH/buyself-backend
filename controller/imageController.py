@@ -1,11 +1,12 @@
 from config.s3bucketConfig import *
 from config.s3Connection import s3_connection
+import random
 
 s3 = s3_connection()
 
 
 def post_image(file):
-    file.name = file.filename
+    file.name = str(random.random())
 
     s3.Bucket(S3_BUCKET_NAME).put_object(
         Body=file,
