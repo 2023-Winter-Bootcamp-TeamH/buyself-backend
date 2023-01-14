@@ -38,7 +38,6 @@ def delete_txt(): # 사용한 txt파일 삭제하는 함수
 def predict(img_name): # YOLOv5모델로 이미지 객체 탐지
     model = torch.hub.load('ultralytics/yolov5', 'custom', 'best.pt')
 
-    # image = get_image(img_name)
     select_model = model(img_name, size=640)
 
     object_cords(select_model)

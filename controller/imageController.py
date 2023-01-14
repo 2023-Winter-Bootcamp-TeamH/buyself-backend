@@ -1,4 +1,4 @@
-from config.s3Config import *
+from config.s3bucketConfig import *
 from config.s3Connection import s3_connection
 
 s3 = s3_connection()
