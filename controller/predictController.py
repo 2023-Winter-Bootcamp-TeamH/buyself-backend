@@ -1,30 +1,42 @@
 from flask import Blueprint, request, jsonify, abort
 from flask_sqlalchemy import SQLAlchemy
 from controller.imageController import *
+from flask_restx import Resource, Namespace
+from werkzeug.datastructures import FileStorage
 import views
 import tasks
 
 db = SQLAlchemy()
-routes = Blueprint('predict', __name__)
 
+Products = Namespace(
+    name="Products",
+    description="Products 데이터를 조회하기 위해 사용하는 API.",
+)
 
-@routes.route('/api/predict', methods=['POST'])
-def detect_object():
-    if request.method == 'POST':
-        try:
-            image = request.files["file"]
-            img_name = post_image(image)
-            url = get_url(img_name)
-            task = tasks.prediction.delay(url)
+upload_parser = Products.parser()
+upload_parser.add_argument('file', location='files',
+                           type=FileStorage, required=False)
 
-            result = []
-            for i in task.get():
-                product = views.get_products_id_list(int(i['id']))
-                result.append(
-                    {'class_name': product['class_name'], 'price': product['price'], 'img_url': product['img_url']})
+@Products.route('api/predict/')
+@Products.expect(upload_parser)
+@Products.doc(responses={200: 'Success'})
+@Products.doc(responses={500: 'Wrong request'})
+class Predict_Object(Resource):
+    def post(self):
+        """사용자가 계산한 상품을 인식해 화면에 띄웁니다 """
+        if request.method == 'POST':
+                args = upload_parser.parse_args()
+                file = args.get("file")
+                img_name = post_image(file)
+                url = get_url(img_name)
+                task = tasks.prediction.delay(url)
 
-            delete_image(img_name)
+                result = []
+                for i in task.get():
+                    product = views.get_products_id_list(int(i['id']))
+                    result.append(
+                        {'class_name': product['class_name'], 'price': product['price'], 'img_url': product['img_url']})
 
-            return jsonify(result)
-        except:
-            abort(500, "Wrong")
+                delete_image(img_name)
+
+                return jsonify(result)

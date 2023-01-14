@@ -1,11 +1,10 @@
-from flask import Flask, request, jsonify
+from flask import Flask
 from flask_migrate import Migrate
 from flask_restx import Api
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
 
 from config import DatabaseConfig
-
 
 db = SQLAlchemy()
 migrate = Migrate()
@@ -22,10 +21,6 @@ def create_app():
     db.init_app(app)
     migrate.init_app(app, db)
 
-    # 블루프린트
-    from controller import predictController
-    app.register_blueprint(predictController.routes)
-
     # API Swagger
     api = Api(
         app,
@@ -36,8 +31,9 @@ def create_app():
         contact="junsu1222@naver.com",
         license="MIT",
     )
-    from controller import listController
+    from controller import listController, predictController
     api.add_namespace(listController.Products, '/')
+    api.add_namespace(predictController.Products, '/')
 
     return app
 
