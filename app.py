@@ -12,13 +12,19 @@ migrate = Migrate()
 
 def create_app():
     app = Flask(__name__)
+
     app.config['JSON_AS_ASCII'] = False
     CORS(app, resources={r'*': {'origins': '*'}})
+
     app.config.from_object(DatabaseConfig)
 
     # ORM
     db.init_app(app)
     migrate.init_app(app, db)
+
+    # 블루프린트
+    from controller import predictController
+    app.register_blueprint(predictController.routes)
 
     # API Swagger
     api = Api(
@@ -37,8 +43,7 @@ def create_app():
 
 app = create_app()
 
+
 if __name__ == "__main__":
     app.run(host='0.0.0.0', debug=True)
-
-
 
