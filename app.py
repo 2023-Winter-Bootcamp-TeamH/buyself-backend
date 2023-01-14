@@ -36,7 +36,9 @@ def create_app():
         contact="junsu1222@naver.com",
         license="MIT",
     )
-    from controller import listController
+
+    from controller import searchController,listController
+    api.add_namespace(searchController.Products, '/')
     api.add_namespace(listController.Products, '/')
 
     return app
