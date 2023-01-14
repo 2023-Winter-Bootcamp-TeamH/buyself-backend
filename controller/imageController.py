@@ -1,7 +1,6 @@
 from config.s3bucketConfig import *
 from config.s3Connection import s3_connection
 import random
-
 s3 = s3_connection()
 
 
