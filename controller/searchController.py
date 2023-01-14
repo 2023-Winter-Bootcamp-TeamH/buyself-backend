@@ -21,6 +21,7 @@ parser.add_argument('kw', type=str, required=False, help='검색어 입력')
 @Products.doc(responses={500: 'We Can''t find data'})
 class ProductsClass(Resource):
     def get(self):
+        """키워드 검색을 통해 상품 정보를 가져옵니다. """
         page = request.args.get('page', type=int, default=1)
         args = parser.parse_args()
         try:
