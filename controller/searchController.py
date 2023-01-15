@@ -25,7 +25,7 @@ class ProductsClass(Resource):
         page = request.args.get('page', type=int, default=1)
         args = parser.parse_args()
         try:
-            kw = args['kw']
+            kw = args['kw'].get(default='')
             products, meta = views.get_search(kw, page)
             if kw == '':
                 return "검색어를 입력해주세요."
