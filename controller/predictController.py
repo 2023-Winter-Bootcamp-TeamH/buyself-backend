@@ -14,8 +14,7 @@ Products = Namespace(
 )
 
 upload_parser = Products.parser()
-upload_parser.add_argument('file', location='files',
-                           type=FileStorage, required=False)
+upload_parser.add_argument('file', location='files', type=FileStorage, required=False)
 
 @Products.route('api/predict/')
 @Products.expect(upload_parser)
@@ -42,4 +41,4 @@ class Predict_Object(Resource):
 
                 return jsonify(result)
             except:
-                abort(500, "We can't find any object")
+                abort(404, "We can't find any object")
