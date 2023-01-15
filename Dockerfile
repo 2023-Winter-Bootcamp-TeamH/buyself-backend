@@ -12,4 +12,7 @@ WORKDIR /app
 RUN pip install --upgrade pip
 RUN pip install -r requirements.txt
 
+RUN apt-get update
+RUN apt-get -y install libgl1-mesa-glx
+
 CMD ["python3", "-m", "flask", "run", "--host=0.0.0.0"]
