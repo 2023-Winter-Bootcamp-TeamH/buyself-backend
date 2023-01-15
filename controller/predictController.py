@@ -14,8 +14,7 @@ Products = Namespace(
 )
 
 upload_parser = Products.parser()
-upload_parser.add_argument('file', location='files',
-                           type=FileStorage, required=False)
+upload_parser.add_argument('file', location='files', type=FileStorage, required=False)
 
 @Products.route('api/predict/')
 @Products.expect(upload_parser)
