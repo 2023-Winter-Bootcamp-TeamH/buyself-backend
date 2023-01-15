@@ -41,4 +41,4 @@ class Predict_Object(Resource):
 
                 return jsonify(result)
             except:
-                abort(500, "We can't find any object")
+                abort(404, "We can't find any object")
