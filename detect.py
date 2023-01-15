@@ -42,6 +42,7 @@ def predict(img_name): # YOLOv5모델로 이미지 객체 탐지
 
     object_cords(select_model)
     get_class(select_model)
+
     create_txt(select_model)
     num_line = list(map(int, create_txt(select_model)))
 
