@@ -25,6 +25,7 @@ class Predict_Object(Resource):
     def post(self):
         """사용자가 계산한 상품을 인식해 화면에 띄웁니다 """
         if request.method == 'POST':
+            try:
                 args = upload_parser.parse_args()
                 file = args.get("file")
                 img_name = post_image(file)
@@ -40,3 +41,5 @@ class Predict_Object(Resource):
                 delete_image(img_name)
 
                 return jsonify(result)
+            except:
+                abort(500, "We can't find any object")
