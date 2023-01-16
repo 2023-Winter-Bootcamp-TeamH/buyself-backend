@@ -3,14 +3,17 @@ from flask_migrate import Migrate
 from flask_restx import Api
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
+from flask_caching import Cache
+import redis
 
 from config import DatabaseConfig
 
 db = SQLAlchemy()
 migrate = Migrate()
+Redis = redis.Redis(host='redis', port=6379, db=0, decode_responses=True)
+app = Flask(__name__)
 
 def create_app():
-    app = Flask(__name__)
 
     app.config['JSON_AS_ASCII'] = False
     CORS(app, resources={r'*': {'origins': '*'}})
