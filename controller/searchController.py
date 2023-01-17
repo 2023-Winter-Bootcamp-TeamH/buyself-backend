@@ -25,11 +25,9 @@ class ProductsClass(Resource):
         page = request.args.get('page', type=int, default=1)
         args = parser.parse_args()
         try:
-            kw = args['kw'].get(default='')
+            kw = args['kw']
             products, meta = views.get_search(kw, page)
-            if kw == '':
-                return "검색어를 입력해주세요."
-            elif products == []:
+            if products == []:
                 return "해당 상품이 없습니다."
             else:
                 return jsonify({
