@@ -9,8 +9,9 @@ from config import DatabaseConfig
 db = SQLAlchemy()
 migrate = Migrate()
 
+app = Flask(__name__)
+
 def create_app():
-    app = Flask(__name__)
 
     app.config['JSON_AS_ASCII'] = False
     CORS(app, resources={r'*': {'origins': '*'}})

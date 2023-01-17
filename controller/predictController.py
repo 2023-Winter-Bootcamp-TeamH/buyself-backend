@@ -1,4 +1,4 @@
-from flask import Blueprint, request, jsonify, abort
+from flask import request, jsonify, abort
 from flask_sqlalchemy import SQLAlchemy
 from controller.imageController import *
 from flask_restx import Resource, Namespace
@@ -30,7 +30,8 @@ class Predict_Object(Resource):
                 img_name = post_image(file)
                 url = get_url(img_name)
                 task = tasks.prediction.delay(url)
-
+                while not task.ready():
+                    pass
                 result = []
                 for i in task.get():
                     product = views.get_products_id_list(int(i['id']))
