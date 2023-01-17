@@ -3,11 +3,14 @@ from flask_migrate import Migrate
 from flask_restx import Api
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
+from flask_caching import Cache
+import redis
 
 from config import DatabaseConfig
 
 db = SQLAlchemy()
 migrate = Migrate()
+app = Flask(__name__)
 
 app = Flask(__name__)
 
