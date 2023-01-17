@@ -10,7 +10,6 @@ from config import DatabaseConfig
 
 db = SQLAlchemy()
 migrate = Migrate()
-Redis = redis.Redis(host='redis', port=6379, db=0, decode_responses=True)
 app = Flask(__name__)
 
 def create_app():
