@@ -36,7 +36,7 @@ class Predict_Object(Resource):
                 for i in task.get():
                     product = views.get_products_id_list(int(i['id']))
                     result.append(
-                        {'class_name': product['class_name'], 'price': product['price'], 'img_url': product['img_url']})
+                        {'id': product['id'], 'class_name': product['class_name'], 'price': product['price'], 'img_url': product['img_url']})
 
                 delete_image(img_name)
 
