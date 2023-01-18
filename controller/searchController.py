@@ -14,8 +14,8 @@ Products = Namespace(
 parser = Products.parser()
 parser.add_argument('kw', type=str, required=False, help='검색어 입력')
 
-# GET /search?kw={kw}
-@Products.route('search')
+# GET /api/search?kw={kw}
+@Products.route('api/search')
 @Products.expect(parser)
 @Products.doc(responses={200: 'Success'})
 @Products.doc(responses={500: 'We Can''t find data'})
