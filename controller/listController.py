@@ -3,6 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_restx import Resource, Namespace
 
 import views
+from controller.predictController import cache
 
 db = SQLAlchemy()
 
@@ -27,11 +28,18 @@ class ProductsClass(Resource):
             page = args['page']         # 쿼리스트링으로 받은 페이지
             if not 0 < int(page) <= 4:
                 abort(404, "We Can't find Page")
-            products, meta = views.get_product_all_list(page)
-            return jsonify({
-                'success': True,
-                'data': products,
-                'meta': meta
-             })
+                return
+            if(cache.get(str(page))):
+                return cache.get(str(page))
+            else:
+                products, meta = views.get_product_all_list(page)
+                result = jsonify({
+                    'success': True,
+                    'data': products,
+                    'meta': meta
+                 })
+                if cache.get(str(page)) is None:
+                    cache.set(str(page), result, 30)
+                    return result
         except TypeError:
             abort(404, "We Can't find Page")

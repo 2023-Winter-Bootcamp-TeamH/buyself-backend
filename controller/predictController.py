@@ -30,8 +30,7 @@ cache = Cache(app, config={
 @Products.expect(upload_parser)
 @Products.doc(responses={200: 'Success'})
 @Products.doc(responses={500: 'Wrong request'})
-class Predict_Object(Resource):
-    @cache.cached(timeout=10, query_string=False)
+class PredictObject(Resource):
     def post(self):
         """사용자가 계산한 상품을 인식해 화면에 띄웁니다 """
         if request.method == 'POST':

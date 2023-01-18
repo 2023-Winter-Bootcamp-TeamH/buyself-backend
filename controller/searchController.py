@@ -3,6 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_restx import Resource, Namespace
 
 import views
+from controller.predictController import cache
 
 db = SQLAlchemy()
 
@@ -25,9 +26,16 @@ class ProductsClass(Resource):
         page = request.args.get('page', type=int, default=1)
         args = parser.parse_args()
         kw = args['kw']
-        products, meta = views.get_search(kw, page)
-        return jsonify({
-            'success': True,
-            'data': products,
-            'meta': meta
-        })
+        if(cache.get(str(kw))):
+            return cache.get(str(kw))
+        else:
+            products, meta = views.get_search(kw, page)
+            result = jsonify({
+                'success': True,
+                'data': products,
+                'meta': meta
+            })
+            if cache.get(str(kw)) is None:
+                cache.set(str(kw), result, 30)
+                return result
+
