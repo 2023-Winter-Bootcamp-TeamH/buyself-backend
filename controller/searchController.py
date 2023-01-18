@@ -24,18 +24,10 @@ class ProductsClass(Resource):
         """키워드 검색을 통해 상품 정보를 가져옵니다. """
         page = request.args.get('page', type=int, default=1)
         args = parser.parse_args()
-        try:
-            kw = args['kw'].get(default='')
-            products, meta = views.get_search(kw, page)
-            if kw == '':
-                return "검색어를 입력해주세요."
-            elif products == []:
-                return "해당 상품이 없습니다."
-            else:
-                return jsonify({
-                    'success': True,
-                    'data': products,
-                    'meta': meta
-                })
-        except :
-            abort(500, "검색어를 입력해주세요")
+        kw = args['kw']
+        products, meta = views.get_search(kw, page)
+        return jsonify({
+            'success': True,
+            'data': products,
+            'meta': meta
+        })
