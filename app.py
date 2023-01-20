@@ -1,18 +1,22 @@
-from flask import Flask
+from flask import Flask, request
 from flask_migrate import Migrate
 from flask_restx import Api
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
-from flask_caching import Cache
-import redis
-
+from prometheus_flask_exporter import PrometheusMetrics
 from config import DatabaseConfig
+import logging
 
 db = SQLAlchemy()
 migrate = Migrate()
 app = Flask(__name__)
 
-app = Flask(__name__)
+logging.basicConfig(level=logging.INFO)
+logging.info("Setting LOGLEVEL to INFO")
+
+metrics = PrometheusMetrics(app)
+metrics.info("app_info", "App Info, this can be anything you want", version="1.0.3")
+
 
 def create_app():
 
@@ -43,9 +47,5 @@ def create_app():
 
     return app
 
-app = create_app()
 
-
-if __name__ == "__main__":
-    app.run(host='0.0.0.0', debug=True)
 

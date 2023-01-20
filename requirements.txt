@@ -29,6 +29,7 @@ Flask==2.2.2
 Flask-Caching==2.0.2
 Flask-Cors==3.0.10
 Flask-Migrate==3.1.0
+Flask-RESTful==0.3.9
 flask-restx==1.0.3
 Flask-SQLAlchemy==3.0.2
 flower==1.2.0
@@ -36,6 +37,7 @@ fonttools==4.38.0
 gitdb==4.0.10
 GitPython==3.1.30
 greenlet==2.0.1
+gunicorn==20.1.0
 humanize==4.4.0
 idna==3.4
 importlib-metadata==6.0.0
@@ -60,6 +62,7 @@ pexpect==4.8.0
 pickleshare==0.7.5
 Pillow==9.3.0
 prometheus-client==0.15.0
+prometheus-flask-exporter==0.21.0
 prompt-toolkit==3.0.36
 psutil==5.9.4
 ptyprocess==0.7.0
