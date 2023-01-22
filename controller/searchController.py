@@ -1,9 +1,12 @@
-from flask import jsonify, request, abort
+from flask import jsonify, Response
 from flask_sqlalchemy import SQLAlchemy
 from flask_restx import Resource, Namespace
+from elasticsearch import Elasticsearch
 
-import views
-from controller.predictController import cache
+
+from controller.elasticSearch import inputData
+
+es = Elasticsearch("http://elastic:9200/")
 
 db = SQLAlchemy()
 
@@ -23,19 +26,13 @@ parser.add_argument('kw', type=str, required=False, help='검색어 입력')
 class ProductsClass(Resource):
     def get(self):
         """키워드 검색을 통해 상품 정보를 가져옵니다. """
-        page = request.args.get('page', type=int, default=1)
+        inputData()
         args = parser.parse_args()
         kw = args['kw']
-        if(cache.get(str(kw))):
-            return cache.get(str(kw))
-        else:
-            products, meta = views.get_search(kw, page)
-            result = jsonify({
-                'success': True,
-                'data': products,
-                'meta': meta
-            })
-            if cache.get(str(kw)) is None:
-                cache.set(str(kw), result, 30)
-                return result
-
+        if not kw:
+            return Response(status=404)
+        results = es.search(index='dictionary', body={'query': {'match': {'class_name': str(kw)}}})
+        data_list = []
+        for result in results['hits']['hits']:
+            data_list.append(result['_source'])
+        return jsonify(data_list)

@@ -4,6 +4,7 @@ from flask_restx import Resource, Namespace
 
 import views
 from controller.predictController import cache
+from controller.elasticSearch import inputData
 
 db = SQLAlchemy()
 
@@ -23,6 +24,7 @@ parser.add_argument('page', type=int, required=False, help='페이지번호')
 class ProductsClass(Resource):
     def get(self):
         """전체 상품 리스트를 페이지 별로 가져옵니다. """
+        inputData()
         try:
             args = parser.parse_args()
             page = args['page']         # 쿼리스트링으로 받은 페이지
