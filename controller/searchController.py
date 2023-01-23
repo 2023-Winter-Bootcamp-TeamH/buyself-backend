@@ -31,8 +31,22 @@ class ProductsClass(Resource):
         kw = args['kw']
         if not kw:
             return Response(status=404)
-        results = es.search(index='dictionary', body={'query': {'match': {'class_name': str(kw)}}})
+        product_results = es.search(index='dictionary', body={'query': {'match': {'class_name': str(kw)}}})
         data_list = []
-        for result in results['hits']['hits']:
-            data_list.append(result['_source'])
-        return jsonify(data_list)
+        for product_result in product_results['hits']['hits']:
+            data_list.append(product_result['_source'])
+        meta = {
+            "page": 1,
+            "pages": 4,
+            "total_count": 22,
+            "prev_page": None,
+            "next_page": 2,
+            "has_next": True,
+            "has_prev": False
+        }
+        result = jsonify({
+            'success': True,
+            'data': data_list,
+            'meta': meta
+        })
+        return result
