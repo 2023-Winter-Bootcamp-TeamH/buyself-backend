@@ -6,7 +6,7 @@ from elasticsearch import Elasticsearch
 
 from controller.elasticSearch import inputData
 
-es = Elasticsearch("http://elastic:9200/")
+es = Elasticsearch("http://elasticsearch:9200/")
 
 db = SQLAlchemy()
 

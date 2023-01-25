@@ -26,7 +26,7 @@ dalle2==1.0.11
 decorator==5.1.1
 dnspython==2.3.0
 elastic-transport==8.4.0
-elasticsearch==7.9.1
+elasticsearch==7.17.8
 eventlet==0.33.3
 executing==1.2.0
 Flask==2.2.2
