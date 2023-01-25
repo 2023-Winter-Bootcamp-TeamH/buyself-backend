@@ -72,12 +72,9 @@ class SuccessPayment(Resource):
             "pg_token": pg_token,  # 쿼리 스트링으로 받은 pg토큰
         }
 
-        res = requests.post(URL, headers=headers, params=params)
-        amount = res.json()['amount']['total']
-        context = {
-            'amount': amount
-        }
-        return jsonify(context)
+        requests.post(URL, headers=headers, params=params)
+
+        return True
 
 @Products.route('api/payment/cancel')
 @Products.expect(parser)
@@ -97,23 +94,15 @@ class CanclePayment(Resource):
 
         }
 
-        res = requests.post(URL, headers=headers, params=params)
-        amount = res.json()['cancel_available_amount']['total']
+        requests.post(URL, headers=headers, params=params)
 
-        context = {
-            'res': res,
-            'cancel_available_amount': amount,
-        }
-
-        if res.json()['status'] == "QUIT_PAYMENT":
-            res = res.json()
-            return jsonify(res)
+        return False
 
 @Products.route('api/payment/fail')
 @Products.expect(parser)
 @Products.doc(responses={200: 'Success'})
 @Products.doc(responses={404: 'We Can''t find Page'})
 class FailPayment(Resource):
-    """결제 버튼 클릭 후 15분이 지나도 결제가 안되면 결제 실패합니다. """
     def get(self):
-        return "payment fail!"
+        """결제 버튼 클릭 후 15분이 지나도 결제가 안되면 결제 실패합니다. """
+        return False
