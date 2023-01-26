@@ -25,6 +25,9 @@ def inputData():
                 },
                 "mappings": {
                     "properties": {
+                        "id": {
+                            "type": "integer",
+                        },
                         "class_name": {
                             "type": "text",
                             "analyzer": "nori_token"
