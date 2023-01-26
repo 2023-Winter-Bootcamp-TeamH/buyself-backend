@@ -1,13 +1,10 @@
 from flask import request, jsonify, abort
 from flask_sqlalchemy import SQLAlchemy
-
-from app import app
 from controller.imageController import *
 from flask_restx import Resource, Namespace
 from werkzeug.datastructures import FileStorage
 import views
 import tasks
-from flask_caching import Cache
 
 db = SQLAlchemy()
 
@@ -18,13 +15,6 @@ Products = Namespace(
 
 upload_parser = Products.parser()
 upload_parser.add_argument('file', location='files', type=FileStorage, required=False)
-cache = Cache(app, config={
-    'CACHE_TYPE':'redis',
-    'CACHE_REDIS_HOST':'redis',
-    'CACHE_REDIS_PORT':'6379',
-    'CACHE_REDIS_DB':'0',
-    'CACHE_REDIS_URL':'redis://redis:6379/0',
-})  # Initialize Cache
 
 @Products.route('api/predict/')
 @Products.expect(upload_parser)
@@ -46,8 +36,8 @@ class PredictObject(Resource):
                 for i in task.get():
                     product = views.get_products_id_list(int(i['id']))
                     result.append(
-                        {'id': product['id'], 'class_name': product['class_name'], 'price': product['price'], 'img_url': product['img_url']})
-
+                        {'id': product['id'], 'class_name': product['class_name'], 'price': product['price'],
+                         'img_url': product['img_url']})
                 delete_image(img_name)
 
                 return jsonify(result)

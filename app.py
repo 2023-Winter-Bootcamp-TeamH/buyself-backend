@@ -1,4 +1,4 @@
-from flask import Flask, request
+from flask import Flask
 from flask_migrate import Migrate
 from flask_restx import Api
 from flask_sqlalchemy import SQLAlchemy
@@ -21,9 +21,10 @@ metrics.info("app_info", "App Info, this can be anything you want", version="1.0
 def create_app():
 
     app.config['JSON_AS_ASCII'] = False
-    CORS(app, resources={r'*': {'origins': '*'}})
-
     app.config.from_object(DatabaseConfig)
+
+    # CORS
+    CORS(app, resources={r'*': {'origins': '*'}})
 
     # ORM
     db.init_app(app)
