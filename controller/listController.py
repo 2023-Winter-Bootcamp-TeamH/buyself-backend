@@ -1,9 +1,10 @@
-from flask import jsonify, request, abort, Blueprint
+from flask import jsonify, abort
 from flask_sqlalchemy import SQLAlchemy
 from flask_restx import Resource, Namespace
-
+from app import app
+from flask_caching import Cache
 import views
-from controller.predictController import cache
+
 from controller.elasticSearch import inputData
 
 db = SQLAlchemy()
@@ -13,7 +14,16 @@ Products = Namespace(
     description="Products 데이터를 조회하기 위해 사용하는 API.",
 )
 
-parser = Products.parser();
+# Initialize Cache
+cache = Cache(app, config={
+    'CACHE_TYPE':'redis',
+    'CACHE_REDIS_HOST':'redis',
+    'CACHE_REDIS_PORT':'6379',
+    'CACHE_REDIS_DB':'0',
+    'CACHE_REDIS_URL':'redis://redis:6379/0',
+})
+
+parser = Products.parser()
 parser.add_argument('page', type=int, required=False, help='페이지번호')
 
 # GET /api/products?page={page}
@@ -24,7 +34,7 @@ parser.add_argument('page', type=int, required=False, help='페이지번호')
 class ProductsClass(Resource):
     def get(self):
         """전체 상품 리스트를 페이지 별로 가져옵니다. """
-        inputData()
+        inputData()                     # POST Elasticsearch input Data
         try:
             args = parser.parse_args()
             page = args['page']         # 쿼리스트링으로 받은 페이지
@@ -40,8 +50,7 @@ class ProductsClass(Resource):
                     'data': products,
                     'meta': meta
                  })
-                if cache.get(str(page)) is None:
-                    cache.set(str(page), result, 30)
-                    return result
+                cache.set(str(page), result, 30)
+                return result
         except TypeError:
             abort(404, "We Can't find Page")

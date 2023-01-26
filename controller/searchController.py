@@ -3,7 +3,6 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_restx import Resource, Namespace
 from elasticsearch import Elasticsearch
 
-
 from controller.elasticSearch import inputData
 
 es = Elasticsearch("http://elasticsearch:9200/")
@@ -26,7 +25,7 @@ parser.add_argument('kw', type=str, required=False, help='검색어 입력')
 class ProductsClass(Resource):
     def get(self):
         """키워드 검색을 통해 상품 정보를 가져옵니다. """
-        inputData()
+        inputData()                 # Post Elasticsearch input data
         args = parser.parse_args()
         kw = args['kw']
         if not kw:
