@@ -37,6 +37,9 @@ def inputData():
                         },
                         "img_url": {
                             "type": "text",
+                        },
+                        "analyze": {
+                            "type": "keyword"
                         }
                     }
                 }
