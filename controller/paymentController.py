@@ -1,6 +1,6 @@
-import requests
-from flask import request, jsonify
+from flask import request, jsonify, redirect
 from flask_restx import Namespace, Resource
+import requests
 
 from app import app
 
@@ -10,6 +10,7 @@ Products = Namespace(
 )
 parser = Products.parser();
 parser.add_argument('amount', type=int, required=False, help='총 금액')
+
 
 @Products.route('api/payment')
 @Products.expect(parser)
@@ -44,10 +45,9 @@ class Payment(Resource):
 
         return jsonify({'next_url': res.json()['next_redirect_pc_url']})
 
-
 def get_token():
-    token = request.args.get("pg_token")
 
+    token = request.args.get("pg_token")
     return token
 
 
@@ -74,7 +74,8 @@ class SuccessPayment(Resource):
 
         requests.post(URL, headers=headers, params=params)
 
-        return True
+        return redirect('http://localhost:3000/pay')
+
 
 @Products.route('api/payment/cancel')
 @Products.expect(parser)
@@ -96,7 +97,8 @@ class CanclePayment(Resource):
 
         requests.post(URL, headers=headers, params=params)
 
-        return False
+        return redirect('http://localhost:3000/pay/Fail')
+
 
 @Products.route('api/payment/fail')
 @Products.expect(parser)
@@ -105,4 +107,4 @@ class CanclePayment(Resource):
 class FailPayment(Resource):
     def get(self):
         """결제 버튼 클릭 후 15분이 지나도 결제가 안되면 결제 실패합니다. """
-        return False
+        return redirect('http://localhost:3000/pay/Fail')
