@@ -50,7 +50,7 @@ class ProductsClass(Resource):
                     'data': products,
                     'meta': meta
                  })
-                cache.set(str(page), result, 30)
+                cache.set(str(page), result, 86400)
                 return result
         except TypeError:
             abort(404, "We Can't find Page")
