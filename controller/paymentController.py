@@ -74,7 +74,7 @@ class SuccessPayment(Resource):
 
         requests.post(URL, headers=headers, params=params)
 
-        return redirect('http://localhost:3000/pay')
+        return redirect('http://localhost/pay')
 
 
 @Products.route('api/payment/cancel')
@@ -97,7 +97,7 @@ class CanclePayment(Resource):
 
         requests.post(URL, headers=headers, params=params)
 
-        return redirect('http://localhost:3000/pay/Fail')
+        return redirect('http://localhost/pay/fail')
 
 
 @Products.route('api/payment/fail')
@@ -107,4 +107,4 @@ class CanclePayment(Resource):
 class FailPayment(Resource):
     def get(self):
         """결제 버튼 클릭 후 15분이 지나도 결제가 안되면 결제 실패합니다. """
-        return redirect('http://localhost:3000/pay/Fail')
+        return redirect('http://localhost/pay/fail')
